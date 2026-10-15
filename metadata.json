@@ -1,0 +1,6 @@
+{
+  "name": "One More Book - Literary Journal & Article Studio",
+  "description": "Long-form literary essays, book reviews, and publishing studio with interactive image attachments, figure management, and editorial reading experience.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
