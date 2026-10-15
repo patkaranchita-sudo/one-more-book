@@ -61,11 +61,17 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           </div>
 
           {/* Title */}
-          <h3
-            onClick={() => onRead(article)}
-            className="font-serif text-2xl font-semibold text-stone-900 group-hover:text-amber-950 transition-colors leading-snug mb-2 cursor-pointer"
-          >
-            {article.title}
+          <h3 className="font-serif text-2xl font-semibold text-stone-900 group-hover:text-amber-950 transition-colors leading-snug mb-2">
+            <a
+              href={`/article/${article.slug}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onRead(article);
+              }}
+              className="hover:underline focus:outline-none"
+            >
+              {article.title}
+            </a>
           </h3>
 
           {/* Byline */}
@@ -102,13 +108,17 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           </button>
         </div>
 
-        <button
-          onClick={() => onRead(article)}
+        <a
+          href={`/article/${article.slug}`}
+          onClick={(e) => {
+            e.preventDefault();
+            onRead(article);
+          }}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-900 group-hover:text-amber-900 hover:underline transition-all"
         >
           <span>Read Essay</span>
           <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-        </button>
+        </a>
       </div>
     </article>
   );

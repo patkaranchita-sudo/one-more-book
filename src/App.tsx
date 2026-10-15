@@ -6,12 +6,13 @@ import { ArticleReaderModal } from './components/ArticleReaderModal';
 import { AttachImageModal } from './components/AttachImageModal';
 import { ArticleEditorModal } from './components/ArticleEditorModal';
 import { ImageLightbox } from './components/ImageLightbox';
+import { BatchImageMatcher } from './components/BatchImageMatcher';
 import { Footer } from './components/Footer';
 import { Article, ArticleImageAttachment } from './types';
 import { INITIAL_ARTICLES } from './data/initialArticles';
 import { BookOpen, Paperclip, Plus, Sparkles, Filter } from 'lucide-react';
 
-const STORAGE_KEY = 'one_more_book_articles_v1';
+const STORAGE_KEY = 'one_more_book_articles_v3';
 
 export default function App() {
   // Articles state initialized from localStorage or defaults
@@ -64,6 +65,92 @@ export default function App() {
     caption: '',
     credit: '',
   });
+
+  // Helper to extract article slug from pathname, hash, or search params
+  const getSlugFromLocation = (): string | null => {
+    if (typeof window === 'undefined') return null;
+
+    // 1. Direct path: /article/sense-and-sensibility
+    const pathname = window.location.pathname;
+    const pathMatch = pathname.match(/^\/article\/([^/?#]+)/i);
+    if (pathMatch && pathMatch[1]) {
+      return decodeURIComponent(pathMatch[1]);
+    }
+
+    // 2. Hash fallback: #/article/sense-and-sensibility or #sense-and-sensibility
+    const hash = window.location.hash;
+    const hashMatch = hash.match(/^#\/?(?:article\/)?([^/?]+)/i);
+    if (hashMatch && hashMatch[1]) {
+      return decodeURIComponent(hashMatch[1]);
+    }
+
+    // 3. Query param: ?article=sense-and-sensibility
+    const params = new URLSearchParams(window.location.search);
+    const querySlug = params.get('article') || params.get('slug');
+    if (querySlug) {
+      return decodeURIComponent(querySlug);
+    }
+
+    return null;
+  };
+
+  // Sync URL routing on mount and on browser back/forward (popstate/hashchange)
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const slug = getSlugFromLocation();
+      if (slug) {
+        const found = articles.find(
+          (a) => a.slug === slug || String(a.id) === slug
+        );
+        if (found) {
+          setReadingArticle(found);
+          document.title = `${found.title} — One More Book`;
+        }
+      } else {
+        setReadingArticle(null);
+        document.title = 'One More Book — Literary Journal & Article Studio';
+      }
+    };
+
+    handleLocationChange();
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
+  }, [articles]);
+
+  // Handler to open an article with unique URL
+  const handleOpenArticle = (article: Article) => {
+    setReadingArticle(article);
+    const newPath = `/article/${article.slug}`;
+    if (window.location.pathname !== newPath) {
+      try {
+        window.history.pushState({ articleSlug: article.slug }, '', newPath);
+      } catch (e) {
+        // Fallback for restricted iframe sandbox
+        window.location.hash = `/article/${article.slug}`;
+      }
+    }
+    document.title = `${article.title} — One More Book`;
+  };
+
+  // Handler to close article and return URL to home
+  const handleCloseArticle = () => {
+    setReadingArticle(null);
+    if (window.location.pathname.startsWith('/article/')) {
+      try {
+        window.history.pushState({}, '', '/');
+      } catch (e) {
+        window.location.hash = '';
+      }
+    } else if (window.location.hash.includes('article')) {
+      window.location.hash = '';
+    }
+    document.title = 'One More Book — Literary Journal & Article Studio';
+  };
 
   // Keep reading modal in sync if the open article is updated (e.g. image attached while reading)
   useEffect(() => {
@@ -221,6 +308,34 @@ export default function App() {
     );
   };
 
+  const handleBatchUpdateImages = (
+    mappings: { articleId: number | string; imageUrl: string; fileName: string }[]
+  ) => {
+    setArticles((prev) =>
+      prev.map((art) => {
+        const found = mappings.find((m) => String(m.articleId) === String(art.id));
+        if (found) {
+          const updatedAttachment: ArticleImageAttachment = {
+            id: `att-exact-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+            url: found.imageUrl,
+            caption: `Original photo: ${found.fileName}`,
+            credit: 'Provided by Reader',
+            alt: `${art.title} cover`,
+            placement: 'cover',
+            addedAt: 'Uploaded',
+            fileSize: 'Original file',
+          };
+          return {
+            ...art,
+            coverImage: found.imageUrl,
+            attachments: [updatedAttachment],
+          };
+        }
+        return art;
+      })
+    );
+  };
+
   const handleSaveArticle = (savedArticle: Article) => {
     setArticles((prev) => {
       const existsIndex = prev.findIndex((a) => String(a.id) === String(savedArticle.id));
@@ -269,6 +384,7 @@ export default function App() {
           setSelectedCategory('all');
           setSearchQuery('');
           setOnlyIllustrated(false);
+          handleCloseArticle();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         illustratedCount={illustratedArticlesCount}
@@ -288,6 +404,12 @@ export default function App() {
         totalArticles={articles.length}
         totalAttachments={totalAttachments}
         onOpenAttachModal={handleOpenGeneralAttachModal}
+      />
+
+      {/* Batch Exact Image Importer */}
+      <BatchImageMatcher
+        articles={articles}
+        onBatchUpdateImages={handleBatchUpdateImages}
       />
 
       {/* Main Articles Catalog */}
@@ -336,7 +458,7 @@ export default function App() {
               <ArticleCard
                 key={article.id}
                 article={article}
-                onRead={setReadingArticle}
+                onRead={handleOpenArticle}
                 onAttachImage={handleOpenAttachForArticle}
                 onEdit={handleOpenEditArticle}
               />
@@ -376,7 +498,7 @@ export default function App() {
       {/* Reader Modal */}
       <ArticleReaderModal
         article={readingArticle}
-        onClose={() => setReadingArticle(null)}
+        onClose={handleCloseArticle}
         onAttachImage={(art) => {
           setAttachArticleId(art.id);
           setAttachModalOpen(true);

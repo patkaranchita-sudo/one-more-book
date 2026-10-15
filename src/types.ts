@@ -13,6 +13,7 @@ export interface ArticleImageAttachment {
 
 export interface Article {
   id: number | string;
+  slug: string;
   title: string;
   subtitle?: string;
   author: string;
@@ -23,6 +24,9 @@ export interface Article {
   coverImage: string;
   excerpt: string;
   seoKeywords: string;
+  mainKeyword?: string;
+  seoTitle?: string;
+  metaDescription?: string;
   content: string;
   attachments: ArticleImageAttachment[];
   isCustom?: boolean;

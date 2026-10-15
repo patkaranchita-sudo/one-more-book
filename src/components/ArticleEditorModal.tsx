@@ -14,6 +14,7 @@ import {
 import { Article, ArticleImageAttachment, ImagePlacement } from '../types';
 import { CURATED_STOCK_IMAGES } from '../data/initialArticles';
 import { ImageWithFallback } from './ImageWithFallback';
+import { slugify } from '../utils/slugify';
 
 interface ArticleEditorModalProps {
   isOpen: boolean;
@@ -180,6 +181,7 @@ export const ArticleEditorModal: React.FC<ArticleEditorModalProps> = ({
 
     const savedArticle: Article = {
       id: articleToEdit?.id || Date.now(),
+      slug: articleToEdit?.slug || slugify(title.trim()),
       title: title.trim(),
       subtitle: subtitle.trim(),
       author: author.trim(),

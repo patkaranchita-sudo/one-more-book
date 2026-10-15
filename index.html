@@ -3,19 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>One More Book — Literary Journal & Article Studio</title>
-    <meta name="description" content="Long-form literary essays, book reviews, and publishing studio with interactive image attachments, figure management, and editorial reading experience." />
-    <meta property="og:title" content="One More Book — Literary Journal & Article Studio" />
-    <meta property="og:description" content="Long-form literary essays, book reviews, and publishing studio with interactive image attachments, figure management, and editorial reading experience." />
+    <!-- 2. Title tag: 50-60 characters (Exactly 56 characters) -->
+    <title>One More Book — Long-Form Book Reviews &amp; Literary Essays</title>
+    <!-- 3. Meta description: 150-160 characters (Exactly 155 characters) -->
+    <meta name="description" content="Read in-depth long-form book reviews, literary essays, and illustrated critiques of classic and modern novels with full thematic analyses on One More Book." />
+    <!-- 1. Main Keyword: long-form book reviews -->
+    <meta name="keywords" content="long-form book reviews, literary essays, book critiques, Jane Austen analysis, Frank Herbert Dune review, novel analyses, book reviews" />
+    <meta property="og:title" content="One More Book — Long-Form Book Reviews &amp; Literary Essays" />
+    <meta property="og:description" content="Read in-depth long-form book reviews, literary essays, and illustrated critiques of classic and modern novels with full thematic analyses on One More Book." />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="One More Book" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="One More Book — Long-Form Book Reviews &amp; Literary Essays" />
+    <meta name="twitter:description" content="Read in-depth long-form book reviews, literary essays, and illustrated critiques of classic and modern novels with full thematic analyses on One More Book." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "One More Book",
+      "headline": "Long-Form Book Reviews & Literary Essays",
+      "description": "Read in-depth long-form book reviews, literary essays, and illustrated critiques of classic and modern novels with full thematic analyses on One More Book.",
+      "url": "https://onemorebook.com",
+      "publisher": {
+        "@type": "Organization",
+        "name": "One More Book Press"
+      }
+    }
+    </script>
   </head>
   <body class="bg-[#FAF8F5] text-stone-900 antialiased selection:bg-amber-100 selection:text-amber-900 min-h-screen">
-    <div id="root"></div>
+    <!-- 10. Text visible in view-source (Pre-rendered semantic HTML inside #root for crawlers and source viewers) -->
+    <div id="root">
+      <header>
+        <nav aria-label="Main Navigation">
+          <a href="/">One More Book</a>
+          <a href="#reading-catalog">Essays</a>
+          <a href="/article/sense-and-sensibility">Sense and Sensibility Review</a>
+          <a href="/article/the-midnight-library">The Midnight Library Review</a>
+          <a href="/article/the-palace-of-illusions">The Palace of Illusions Review</a>
+        </nav>
+      </header>
+      <main>
+        <!-- 4. One clear H1 with main keyword -->
+        <h1>Stories That Stay With You: Long-Form Book Reviews</h1>
+        <!-- 7. Answer-first paragraph -->
+        <p>
+          Long-form book reviews offer readers complete thematic, historical, and psychological breakdowns of significant literature, moving beyond brief star ratings to examine how enduring narratives speak to the human condition.
+        </p>
+
+        <!-- 5. H2s for sections, some as questions -->
+        <section>
+          <h2>What Makes Our Long-Form Book Reviews Distinctive?</h2>
+          <p>
+            Our long-form book reviews combine exhaustive narrative analysis with archival visual plates, providing readers with complete philosophical insights, historical Regency contexts, and character studies that reward dedicated readers.
+          </p>
+        </section>
+
+        <section id="reading-catalog">
+          <h2>Curated Literary Essays &amp; Critical Studies</h2>
+          <article>
+            <!-- 6. Short clean URL, 8. Alt text on every image, 9. Internal links -->
+            <h3><a href="/article/sense-and-sensibility">Sense and Sensibility: The Balance of Emotion and Reason</a></h3>
+            <p>Jane Austen’s timeless exploration of two sisters—Elinor and Marianne Dashwood—navigating love, social expectations, and financial uncertainty in Regency England.</p>
+            <img src="/src/assets/images/sense_and_sensibility_cover_1792104952064.jpg" alt="Vintage Oxford World's Classics paperback edition of Sense and Sensibility by Jane Austen on rose floral cloth" />
+            <p>Related critical reading: Compare with our analysis in <a href="/article/the-palace-of-illusions">The Palace of Illusions</a> and <a href="/article/the-midnight-library">The Midnight Library</a>.</p>
+          </article>
+
+          <article>
+            <h3><a href="/article/the-midnight-library">The Midnight Library: Regret, Choice, and Life’s Infinite Potential</a></h3>
+            <p>Matt Haig’s comforting philosophical novel exploring alternate life branches and finding peace in the imperfect present moment.</p>
+            <img src="/src/assets/images/the_midnight_library_cover_1792104953917.jpg" alt="The Midnight Library book aesthetic polaroid photo showing candlelit cathedral bookshelves" />
+            <p>Related critical reading: Explore how agency shapes destiny in <a href="/article/sense-and-sensibility">Sense and Sensibility</a> and <a href="/article/atomic-habits">Atomic Habits</a>.</p>
+          </article>
+
+          <article>
+            <h3><a href="/article/the-palace-of-illusions">The Palace of Illusions: Reimagining Mahabharata Through Panchaali</a></h3>
+            <p>Chitra Banerjee Divakaruni’s feminist reclamation of an ancient Sanskrit epic, narrating the Kurukshetra war from Draupadi’s fiery interior life.</p>
+            <img src="/src/assets/images/the_palace_of_illusions_cover_1792104955365.jpg" alt="The Palace of Illusions book with green ornate palace archway on a cozy knit blanket with coffee" />
+            <p>Related critical reading: Contrast female autonomy in ancient epics with <a href="/article/sense-and-sensibility">Sense and Sensibility</a> and <a href="/article/and-then-there-were-none">And Then There Were None</a>.</p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Why Does Slow Literary Reading Matter Today?</h2>
+          <p>
+            Slow literary reading cultivates sustained focus, emotional empathy, and critical discernment in an era dominated by transient algorithmic headlines. By spending focused time with challenging literary critiques, readers develop nuanced understanding of complex human conflicts.
+          </p>
+        </section>
+
+        <section>
+          <h2>How Do Visual Plates and Figure Attachments Deepen Literary Analysis?</h2>
+          <p>
+            Visual plates anchor literary themes in tangible material culture, allowing readers to examine first edition book covers, historical manuscripts, and symbolic art alongside the critical text.
+          </p>
+        </section>
+      </main>
+      <footer>
+        <p>&copy; 2026 One More Book. Curated long-form book reviews and literary essays.</p>
+      </footer>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

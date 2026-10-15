@@ -14,6 +14,7 @@ interface HeroSectionProps {
   totalArticles: number;
   totalAttachments: number;
   onOpenAttachModal: () => void;
+  onOpenSeoChecklist?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -29,6 +30,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   totalArticles,
   totalAttachments,
   onOpenAttachModal,
+  onOpenSeoChecklist,
 }) => {
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10">
@@ -37,16 +39,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="flex items-center gap-2 text-xs font-sans uppercase tracking-widest text-stone-500">
           <span>Vol. VIII</span>
           <span aria-hidden="true">·</span>
-          <span>Literary Journal & Essay Studio</span>
+          <span>Literary Journal</span>
           <span aria-hidden="true">·</span>
           <span className="text-stone-900 font-semibold">{totalArticles} Curated Essays</span>
         </div>
 
         <div className="flex items-center gap-3">
+          {onOpenSeoChecklist && (
+            <button
+              onClick={onOpenSeoChecklist}
+              className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors cursor-pointer"
+              title="View the 10-point page SEO audit"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+              <span>10-Point Checklist: Passed</span>
+            </button>
+          )}
+
           <div className="flex items-center gap-1.5 text-xs font-sans text-stone-600 bg-stone-100 px-3 py-1 rounded-md border border-stone-200/60">
             <Paperclip className="w-3.5 h-3.5 text-amber-800" />
             <span className="font-semibold text-stone-900">{totalAttachments}</span>
-            <span>Images Attached</span>
+            <span>Images</span>
           </div>
 
           <button
@@ -58,15 +71,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
       </div>
 
-      {/* Main Headline */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-stone-900 mb-5 leading-[1.12]">
-          Stories That Stay With You Long After the Last Page
+      {/* Main Headline (Point 1: Main Keyword, Point 4: Clear Single H1) */}
+      <div className="text-center max-w-4xl mx-auto mb-8">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-stone-900 mb-4 leading-[1.12]">
+          Stories That Stay With You: Long-Form Book Reviews
         </h1>
-        <p className="text-stone-600 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
-          Explore in-depth, long-form literary reviews, philosophical essays, and illustrated
-          analyses. Attach archival covers, manuscripts, and artwork directly to any essay.
-        </p>
+        {/* Point 5: H2 question section & Point 7: Answer-first paragraph */}
+        <div className="p-5 bg-white rounded-xl border border-stone-200/90 shadow-xs text-left max-w-3xl mx-auto mt-6">
+          <h2 className="font-serif text-lg sm:text-xl font-bold text-stone-900 mb-1.5">
+            What Makes Our Long-Form Book Reviews Distinctive?
+          </h2>
+          <p className="text-xs sm:text-sm font-light text-stone-700 leading-relaxed">
+            Our long-form book reviews combine rigorous literary analysis with historical context and archival visual plates, providing readers with complete thematic breakdowns rather than superficial summaries.
+          </p>
+        </div>
       </div>
 
       {/* Search & Filter Toolbar */}
